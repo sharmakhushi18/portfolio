@@ -1,121 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Khushi Sharma | Portfolio</title>
-
-  <link rel="icon" type="image/png" href="favicon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khushi Sharma | Full Stack Java Developer</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <header class="navbar">
-    <div class="container">
-      <h2 class="logo">Khushi <span>Sharma</span></h2>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <h1>Khushi Sharma</h1>
-      <p class="subtitle">Java & Spring Boot Developer</p>
-      <p class="description">
-        Backend-focused developer with frontend fundamentals.
-      </p>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="section">
-    <div class="container">
-      <h2 class="section-title">About</h2>
-      <div class="card">
-        <p>
-          I primarily work with Java and Spring Boot and enjoy learning new
-          programming languages and technologies as needed while building
-          real projects.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills" class="section">
-    <div class="container">
-      <h2 class="section-title">Skills</h2>
-
-      <div class="skills-grid">
-        <div class="skill-category">
-          <h3>Backend</h3>
-          <p>Java, Spring Boot, REST APIs</p>
+    <header class="navbar">
+        <div class="container">
+            <h2 class="logo">Khushi<span>Sharma</span></h2>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
         </div>
+    </header>
 
-        <div class="skill-category">
-          <h3>Database</h3>
-          <p>MySQL, JPA / Hibernate</p>
-        </div>
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Hi, I'm Khushi Sharma</h1>
+                <p class="subtitle">Java & Spring Boot Developer | Frontend Enthusiast</p>
+                <p class="description">
+                    Building robust, scalable backend systems and crafting seamless user experiences.
+                </p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn primary">View My Work</a>
+                    <a href="#contact" class="btn secondary">Contact Me</a>
+                </div>
+            </div>
+        </section>
 
-        <div class="skill-category">
-          <h3>Frontend</h3>
-          <p>HTML, CSS, JavaScript</p>
-        </div>
-      </div>
-    </div>
-  </section>
+        <section id="about" class="section container">
+            <h2 class="section-title">About Me</h2>
+            <div class="card">
+                <p>
+  I build backend applications using Java and Spring Boot and enjoy working
+  on the frontend to create clean, simple user interfaces. I’m always open
+  to learning new technologies and improving through real work.
 
-  <!-- PROJECTS (NO LINKS, NO DETAILS) -->
-  <section id="projects" class="section">
-    <div class="container">
-      <h2 class="section-title">Projects</h2>
+                </p>
+            </div>
+        </section>
 
-      <div class="projects-grid">
-        <div class="project-card">
-          <h3>Backend Application</h3>
-        </div>
+        <section id="skills" class="section container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Backend</h3>
+                    <p>Java, Spring Boot, Spring Data JPA, REST APIs</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Database</h3>
+                    <p>MySQL, PostgreSQL, Hibernate</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+                    <p>HTML5, CSS3, JavaScript (ES6+)</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Tools</h3>
+                    <p>Git, GitHub, Postman, Maven</p>
+                </div>
+            </div>
+        </section>
 
-        <div class="project-card">
-          <h3>Management System</h3>
-        </div>
+        <section id="contact" class="section container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-card">
+                <p>Interested in collaborating or just want to say hi? My inbox is always open!</p>
+                <a href="mailto:sharmakhushi99631@gmail.com" class="email-link">sharmakhushi99631@gmail.com</a>
+                <div class="social-links">
+                    <a href="https://github.com/sharmakhushi18" target="_blank">GitHub</a>
+                    <a href="https://x.com/sharmaa_khushii" target="_blank">Twitter</a>
+                </div>
+            </div>
+        </section>
+    </main>
 
-        <div class="project-card">
-          <h3>Personal Portfolio</h3>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="section">
-    <div class="container contact-card">
-      <h2 class="section-title">Contact</h2>
-
-      <a class="email-link" href="mailto:sharmakhushi99631@gmail.com">
-        sharmakhushi99631@gmail.com
-      </a>
-
-      <div class="social-links">
-        <a href="https://github.com/sharmakhushi18" target="_blank">GitHub</a>
-        <a href="https://www.linkedin.com/in/khushissharma/" target="_blank">LinkedIn</a>
-        <a href="https://x.com/sharmaa_khushii" target="_blank">X</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <p>© 2024 Khushi Sharma</p>
-  </footer>
+    <footer class="footer">
+        <p>&copy;  Khushi Sharma</p>
+    </footer>
 
 </body>
 </html>
