@@ -1,94 +1,722 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khushi Sharma | Full Stack Java Developer</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khushi Sharma — Java Backend Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #060910;
+  --bg2: #0d1117;
+  --bg3: #161b22;
+  --accent: #00ff9d;
+  --accent2: #0ea5e9;
+  --text: #f0f6fc;
+  --muted: #7d8590;
+  --border: rgba(255,255,255,0.06);
+  --font: 'Syne', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  overflow-x: hidden;
+}
+
+/* NOISE OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* CURSOR */
+.cursor {
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s;
+}
+.cursor-ring {
+  width: 32px; height: 32px;
+  border: 1px solid rgba(0,255,157,0.4);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transition: all 0.15s ease;
+}
+
+/* NAVBAR */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(6,9,16,0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.logo span { color: var(--accent); }
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+}
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-family: var(--mono);
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 40px 80px;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.hero-tag {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-tag::before {
+  content: '';
+  width: 32px; height: 1px;
+  background: var(--accent);
+}
+
+h1 {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+}
+h1 .line2 { color: var(--muted); }
+
+.hero-desc {
+  max-width: 480px;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 40px;
+  font-family: var(--mono);
+  font-weight: 300;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+  padding: 12px 28px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+}
+.btn-primary:hover {
+  background: #00e68a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,255,157,0.25);
+}
+
+.btn-outline {
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 12px 28px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* GLOW */
+.hero-glow {
+  position: absolute;
+  right: -100px; top: 50%;
+  transform: translateY(-50%);
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,255,157,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* SECTIONS */
+section {
+  padding: 100px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 48px;
+}
+
+/* ABOUT */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.about-text p {
+  color: var(--muted);
+  line-height: 1.8;
+  font-family: var(--mono);
+  font-weight: 300;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.stat-box {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+}
+.stat-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--accent);
+  display: block;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* SKILLS */
+.skills-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.skill-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--accent);
+  transform: scaleY(0);
+  transition: transform 0.25s;
+}
+.skill-card:hover::before { transform: scaleY(1); }
+.skill-card:hover {
+  border-color: rgba(0,255,157,0.2);
+  transform: translateX(4px);
+}
+
+.skill-icon {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+.skill-card h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+.skill-card p {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* PROJECTS */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.project-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.project-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,255,157,0.03) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.project-card:hover::after { opacity: 1; }
+.project-card:hover {
+  border-color: rgba(0,255,157,0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+
+.project-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.project-icon { font-size: 1.8rem; }
+
+.project-links { display: flex; gap: 12px; }
+.project-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-family: var(--mono);
+  transition: color 0.2s;
+}
+.project-links a:hover { color: var(--accent); }
+
+.project-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: -0.3px;
+}
+
+.project-card p {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  background: rgba(0,255,157,0.08);
+  border: 1px solid rgba(0,255,157,0.15);
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+/* CONTACT */
+.contact-wrapper {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 52px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.contact-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: 50%;
+  transform: translateX(-50%);
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(0,255,157,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.contact-wrapper p {
+  font-family: var(--mono);
+  color: var(--muted);
+  font-size: 0.9rem;
+  max-width: 420px;
+  margin: 0 auto 32px;
+  line-height: 1.7;
+}
+
+.contact-email {
+  display: inline-block;
+  font-size: 1.1rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 700;
+  margin-bottom: 32px;
+  transition: all 0.2s;
+}
+.contact-email:hover {
+  text-shadow: 0 0 20px rgba(0,255,157,0.5);
+}
+
+.social-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  border: 1px solid var(--border);
+  padding: 10px 20px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+.social-btn:hover {
+  color: var(--accent);
+  border-color: rgba(0,255,157,0.3);
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 32px 40px;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* DIVIDER */
+.divider {
+  height: 1px;
+  background: var(--border);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ANIMATIONS */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 100px 20px 60px; }
+  h1 { letter-spacing: -1px; }
+  section { padding: 70px 20px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .contact-wrapper { padding: 32px 20px; }
+  .hero-glow { display: none; }
+}
+</style>
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="container">
-            <h2 class="logo">Khushi<span>Sharma</span></h2>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <div class="logo">Khushi<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-tag">Available for opportunities</div>
+    <h1>
+      Khushi<br>
+      <span class="line2">Sharma</span>
+    </h1>
+    <p class="hero-desc">
+      Java & Spring Boot Developer building real-world backend systems.<br>
+      Final Year ECE — LNCT Bhopal.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-glow"></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label fade-up">01 — about</div>
+  <div class="section-title fade-up">Who I Am</div>
+  <div class="about-grid">
+    <div class="about-text fade-up">
+      <p>I'm a final year ECE student at LNCT Bhopal who loves building backend systems that solve real problems. I specialize in Java and Spring Boot, with hands-on experience in REST API design, database management, and clean architecture.</p>
+      <p>I believe in writing code that is not just functional, but maintainable and scalable. Every project I build reflects real-world engineering decisions — from state machines to transactional logic.</p>
+      <p>I adapt fast — new language, new framework, new stack. If the role needs it, I learn it and get it done.</p>
+    </div>
+    <div class="about-stats fade-up">
+      <div class="stat-box">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Projects Built</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">4+</span>
+        <span class="stat-label">Technologies</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">REST</span>
+        <span class="stat-label">API Design</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">2026</span>
+        <span class="stat-label">Graduating</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label fade-up">02 — skills</div>
+  <div class="section-title fade-up">Tech Stack</div>
+  <div class="skills-container">
+    <div class="skill-card fade-up">
+      <div class="skill-icon">☕</div>
+      <h3>Backend</h3>
+      <p>Java, Spring Boot, Spring Data JPA, REST APIs, Hibernate</p>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">🗄️</div>
+      <h3>Database</h3>
+      <p>MySQL, JDBC, JPA, Query Optimization</p>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">🌐</div>
+      <h3>Frontend</h3>
+      <p>HTML5, CSS3, JavaScript ES6+</p>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">🛠️</div>
+      <h3>Tools</h3>
+      <p>Git, GitHub, Postman, Maven, IntelliJ IDEA</p>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">📊</div>
+      <h3>Analytics</h3>
+      <p>Excel, SQL, Power BI, Data Analysis</p>
+    </div>
+    <div class="skill-card fade-up">
+      <div class="skill-icon">⚙️</div>
+      <h3>Concepts</h3>
+      <p>OOP, MVC, DAO Pattern, Transactions, State Machines</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label fade-up">03 — projects</div>
+  <div class="section-title fade-up">What I've Built</div>
+  <div class="projects-grid">
+
+    <div class="project-card fade-up">
+      <div class="project-top">
+        <div class="project-icon">✈️</div>
+        <div class="project-links">
+          <a href="https://github.com/sharmakhushi18/flight-delay-alert-api" target="_blank">GitHub ↗</a>
         </div>
-    </header>
+      </div>
+      <h3>Flight Delay Alert API</h3>
+      <p>Real-world Spring Boot REST API that auto-generates passenger notifications when a flight is delayed or cancelled. Implements state machine logic for valid status transitions and transactional booking system.</p>
+      <div class="project-tags">
+        <span class="tag">Spring Boot</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">JPA</span>
+        <span class="tag">REST API</span>
+        <span class="tag">Transactions</span>
+      </div>
+    </div>
 
-    <main>
-        <section id="home" class="hero">
-            <div class="hero-content">
-                <h1>Hi, I'm Khushi Sharma</h1>
-                <p class="subtitle">Java & Spring Boot Developer | Frontend Enthusiast</p>
-                <p class="description">
-                    Building robust, scalable backend systems and crafting seamless user experiences.
-                </p>
-                <div class="hero-cta">
-                    <a href="#projects" class="btn primary">View My Work</a>
-                    <a href="#contact" class="btn secondary">Contact Me</a>
-                </div>
-            </div>
-        </section>
+    <div class="project-card fade-up">
+      <div class="project-top">
+        <div class="project-icon">🛫</div>
+        <div class="project-links">
+          <a href="https://github.com/sharmakhushi18/AirportManagementSystem" target="_blank">GitHub ↗</a>
+        </div>
+      </div>
+      <h3>Airport Management System</h3>
+      <p>Console-based Java application with full CRUD operations for passenger, flight, and booking management. Built with JDBC and MySQL following DAO architecture with seat duplicate validation.</p>
+      <div class="project-tags">
+        <span class="tag">Java</span>
+        <span class="tag">JDBC</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">DAO Pattern</span>
+        <span class="tag">OOP</span>
+      </div>
+    </div>
 
-        <section id="about" class="section container">
-            <h2 class="section-title">About Me</h2>
-            <div class="card">
-                <p>
-  I build backend applications using Java and Spring Boot and enjoy working
-  on the frontend to create clean, simple user interfaces. I’m always open
-  to learning new technologies and improving through real work.
+    <div class="project-card fade-up">
+      <div class="project-top">
+        <div class="project-icon">📊</div>
+        <div class="project-links">
+          <a href="https://github.com/sharmakhushi18/College-Placement-Dashboard" target="_blank">GitHub ↗</a>
+        </div>
+      </div>
+      <h3>College Placement Dashboard</h3>
+      <p>End-to-end placement data analysis for LNCT Bhopal. Analyzed 200+ student records using Excel and SQL, built KPI dashboard revealing CSE commands 2x higher average package across branches.</p>
+      <div class="project-tags">
+        <span class="tag">Excel</span>
+        <span class="tag">SQL</span>
+        <span class="tag">Power BI</span>
+        <span class="tag">Data Analysis</span>
+      </div>
+    </div>
 
-                </p>
-            </div>
-        </section>
+  </div>
+</section>
 
-        <section id="skills" class="section container">
-            <h2 class="section-title">Technical Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Backend</h3>
-                    <p>Java, Spring Boot, Spring Data JPA, REST APIs</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Database</h3>
-                    <p>MySQL, PostgreSQL, Hibernate</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Frontend</h3>
-                    <p>HTML5, CSS3, JavaScript (ES6+)</p>
-                </div>
-                <div class="skill-category">
-                    <h3>Tools</h3>
-                    <p>Git, GitHub, Postman, Maven</p>
-                </div>
-            </div>
-        </section>
+<div class="divider"></div>
 
-        <section id="contact" class="section container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-card">
-                <p>Interested in collaborating or just want to say hi? My inbox is always open!</p>
-                <a href="mailto:sharmakhushi99631@gmail.com" class="email-link">sharmakhushi99631@gmail.com</a>
-                <div class="social-links">
-                    <a href="https://github.com/sharmakhushi18" target="_blank">GitHub</a>
-                    <a href="https://x.com/sharmaa_khushii" target="_blank">Twitter</a>
-                </div>
-            </div>
-        </section>
-    </main>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label fade-up">04 — contact</div>
+  <div class="section-title fade-up">Get In Touch</div>
+  <div class="contact-wrapper fade-up">
+    <p>I'm actively looking for opportunities as a Java Backend Developer or Data Analyst. If you have a role or just want to connect — reach out!</p>
+    <a href="mailto:sharmakhushi99631@gmail.com" class="contact-email">sharmakhushi99631@gmail.com</a>
+    <div class="social-row">
+      <a href="https://github.com/sharmakhushi18" target="_blank" class="social-btn">⬡ GitHub</a>
+      <a href="https://www.linkedin.com/in/khushissharma" target="_blank" class="social-btn">in LinkedIn</a>
+      <a href="https://x.com/sharmaa_khushii" target="_blank" class="social-btn">𝕏 Twitter</a>
+    </div>
+  </div>
+</section>
 
-    <footer class="footer">
-        <p>&copy;  Khushi Sharma</p>
-    </footer>
+<footer>
+  <p>Designed & built by Khushi Sharma &nbsp;·&nbsp; 2026</p>
+</footer>
 
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx - 4 + 'px';
+  cursor.style.top = my - 4 + 'px';
+});
+
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx - 16 + 'px';
+  ring.style.top = ry - 16 + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
