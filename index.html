@@ -48,6 +48,18 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:18px 48px; di
 .nav-cta { background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.25); color:var(--accent) !important; padding:8px 18px; border-radius:4px; }
 .nav-cta:hover { background:rgba(0,212,255,0.15) !important; }
 
+/* HAMBURGER */
+.hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; z-index:200; }
+.hamburger span { width:22px; height:2px; background:var(--accent); border-radius:2px; transition:all 0.3s; display:block; }
+.hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity:0; }
+.hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+.mobile-menu { display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(2,11,24,0.98); backdrop-filter:blur(24px); z-index:150; flex-direction:column; align-items:center; justify-content:center; gap:36px; }
+.mobile-menu.open { display:flex; }
+.mobile-menu a { color:var(--text); text-decoration:none; font-size:1.6rem; font-weight:700; transition:color 0.2s; }
+.mobile-menu a:hover { color:var(--accent); }
+
 /* HERO */
 .hero { min-height:100vh; display:flex; align-items:center; padding:120px 48px 80px; max-width:1200px; margin:0 auto; position:relative; z-index:1; }
 .hero-content { max-width:720px; }
@@ -69,12 +81,23 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:18px 48px; di
 .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,119,255,0.4); }
 .btn-outline { border:1px solid rgba(0,212,255,0.2); color:var(--text); padding:13px 30px; border-radius:6px; text-decoration:none; font-weight:600; font-size:0.9rem; transition:all 0.25s; }
 .btn-outline:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+.btn-resume { border:1px solid rgba(0,255,204,0.25); color:var(--accent3); padding:13px 30px; border-radius:6px; text-decoration:none; font-weight:600; font-size:0.9rem; transition:all 0.25s; background:rgba(0,255,204,0.04); }
+.btn-resume:hover { border-color:var(--accent3); background:rgba(0,255,204,0.1); transform:translateY(-2px); }
 
 .hero-stats { display:flex; gap:36px; align-items:center; }
 .hero-stat { text-align:center; }
 .hero-stat-num { font-size:1.7rem; font-weight:900; color:var(--accent); display:block; line-height:1; text-shadow:0 0 16px rgba(0,212,255,0.35); }
 .hero-stat-label { font-family:var(--mono); font-size:0.68rem; color:var(--muted); margin-top:4px; letter-spacing:0.08em; }
 .stat-divider { width:1px; height:36px; background:var(--border); }
+
+/* ABOUT */
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
+.about-text p { font-family:var(--mono); font-size:0.85rem; color:var(--muted); line-height:1.9; margin-bottom:16px; }
+.about-text p strong { color:var(--text); font-weight:600; }
+.about-highlights { display:flex; flex-direction:column; gap:12px; }
+.highlight-item { display:flex; align-items:center; gap:12px; background:var(--bg2); border:1px solid var(--border); border-radius:8px; padding:14px 18px; font-family:var(--mono); font-size:0.8rem; color:var(--muted); transition:all 0.25s; }
+.highlight-item:hover { border-color:rgba(0,212,255,0.2); color:var(--text); }
+.highlight-item span:first-child { font-size:1.1rem; }
 
 /* SECTIONS */
 section { padding:96px 48px; max-width:1200px; margin:0 auto; position:relative; z-index:1; }
@@ -123,7 +146,6 @@ section { padding:96px 48px; max-width:1200px; margin:0 auto; position:relative;
 
 footer { text-align:center; padding:28px 48px; border-top:1px solid var(--border); font-family:var(--mono); font-size:0.74rem; color:var(--muted); position:relative; z-index:1; }
 
-/* ANIMATE IN — no opacity:0 trap, use animation instead */
 .anim { animation: fadeUp 0.7s ease both; }
 .anim:nth-child(1){animation-delay:0.05s}
 .anim:nth-child(2){animation-delay:0.12s}
@@ -136,11 +158,13 @@ footer { text-align:center; padding:28px 48px; border-top:1px solid var(--border
 @media(max-width:768px){
   nav{padding:14px 20px}
   .nav-links{display:none}
+  .hamburger{display:flex}
   .hero{padding:100px 20px 60px}
   section{padding:64px 20px}
   .contact-wrapper{padding:32px 20px}
   .hero-stats{gap:20px}
   .projects-grid{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -151,13 +175,25 @@ footer { text-align:center; padding:28px 48px; border-top:1px solid var(--border
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">about</a>
+  <a href="#skills" onclick="closeMobile()">skills</a>
+  <a href="#projects" onclick="closeMobile()">projects</a>
+  <a href="#contact" onclick="closeMobile()">contact</a>
+</div>
+
 <nav>
   <div class="logo">Khushi<span>.</span></div>
   <ul class="nav-links">
+    <li><a href="#about">about</a></li>
     <li><a href="#skills">skills</a></li>
     <li><a href="#projects">projects</a></li>
     <li><a href="#contact" class="nav-cta">let's connect</a></li>
   </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMobile()">
+    <span></span><span></span><span></span>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -165,7 +201,7 @@ footer { text-align:center; padding:28px 48px; border-top:1px solid var(--border
   <div class="hero-content">
     <div class="hero-badge">
       <span class="badge-dot"></span>
-      Available for opportunities
+      Open to Java Backend &amp; Full Stack roles
     </div>
     <h1>
       <span class="name-line">Khushi</span><br>
@@ -175,17 +211,18 @@ footer { text-align:center; padding:28px 48px; border-top:1px solid var(--border
       <span id="typingText"></span><span class="typing-cursor"></span>
     </div>
     <p class="hero-desc">
-      Building real-world backend systems with Java &amp; Spring Boot.<br>
-      Final Year ECE &mdash; LNCT Bhopal.
+      Building production-grade backend systems with Java &amp; Spring Boot.<br>
+      REST APIs · Microservices · Cloud Deployments · Clean Architecture.
     </p>
     <div class="hero-btns">
       <a href="#projects" class="btn-primary">View Projects</a>
       <a href="https://github.com/sharmakhushi18" target="_blank" class="btn-outline">GitHub ↗</a>
+      <a href="#" class="btn-resume">↓ Resume</a>
     </div>
     <div class="hero-stats">
       <div class="hero-stat">
-        <span class="hero-stat-num">2+</span>
-        <span class="hero-stat-label">Live Projects</span>
+        <span class="hero-stat-num">3+</span>
+        <span class="hero-stat-label">Projects Built</span>
       </div>
       <div class="stat-divider"></div>
       <div class="hero-stat">
@@ -194,12 +231,45 @@ footer { text-align:center; padding:28px 48px; border-top:1px solid var(--border
       </div>
       <div class="stat-divider"></div>
       <div class="hero-stat">
-        <span class="hero-stat-num">2026</span>
-        <span class="hero-stat-label">Graduating</span>
+        <span class="hero-stat-num">1+</span>
+        <span class="hero-stat-label">Live Deployments</span>
       </div>
     </div>
   </div>
 </div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">about</div>
+  <div class="section-title">Who I Am</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a <strong>Java Backend Developer</strong> focused on building systems that work in production — not just on localhost. I care about clean architecture, transactional integrity, and APIs that scale.</p>
+      <p>My core stack is <strong>Java & Spring Boot</strong>. I write layered, maintainable backend code with proper separation of concerns — service layer, persistence layer, no shortcuts.</p>
+      <p>I'm actively looking for <strong>Java Backend Developer or Full Stack roles</strong> where I can contribute from day one and keep growing fast.</p>
+    </div>
+    <div class="about-highlights">
+      <div class="highlight-item">
+        <span>☕</span>
+        <span>Core stack: Java, Spring Boot 3.x, MySQL, REST APIs</span>
+      </div>
+      <div class="highlight-item">
+        <span>🚀</span>
+        <span>Ships to real cloud — Render, Railway & Vercel</span>
+      </div>
+      <div class="highlight-item">
+        <span>🐳</span>
+        <span>Containerized deployments with Docker</span>
+      </div>
+      <div class="highlight-item">
+        <span>🌐</span>
+        <span>Open to remote & on-site opportunities</span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <div class="divider"></div>
 
@@ -259,9 +329,10 @@ footer { text-align:center; padding:28px 48px; border-top:1px solid var(--border
       </div>
       <div class="project-badge"><span class="badge-live"></span> Live on Cloud</div>
       <h3>Flight Delay Alert System</h3>
-      <p>Full-stack system that auto-generates passenger alerts when flights are delayed or cancelled. Implements state machine logic for valid flight status transitions with transactional booking management.</p>
+      <p>Full-stack system with a Spring Boot backend that enforces valid flight status transitions via a state machine — preventing illegal state changes at the service layer. Auto-generates passenger alerts on delay or cancellation. Transactional booking management ensures data consistency. Containerized with Docker and deployed to Render + Vercel.</p>
       <div class="project-tags">
         <span class="tag">Spring Boot</span>
+        <span class="tag">State Machine</span>
         <span class="tag">React.js</span>
         <span class="tag">MySQL</span>
         <span class="tag">JPA/Hibernate</span>
@@ -278,7 +349,7 @@ footer { text-align:center; padding:28px 48px; border-top:1px solid var(--border
         </div>
       </div>
       <h3>Airport Management System</h3>
-      <p>Console-based Java application with full CRUD for passenger, flight, and booking management. Built with JDBC and MySQL following DAO architecture with seat duplicate validation.</p>
+      <p>Console-based Java application with full CRUD for passengers, flights, and bookings. Built with JDBC and MySQL following strict DAO architecture — no logic leaking into persistence layers. Includes duplicate seat validation and clean exception handling throughout.</p>
       <div class="project-tags">
         <span class="tag">Java</span>
         <span class="tag">JDBC</span>
@@ -296,7 +367,7 @@ footer { text-align:center; padding:28px 48px; border-top:1px solid var(--border
         </div>
       </div>
       <h3>College Placement Dashboard</h3>
-      <p>End-to-end placement data analysis for LNCT Bhopal. Analyzed 200+ student records using Excel and SQL, built KPI dashboard revealing CSE commands 2x higher average package.</p>
+      <p>End-to-end data project analyzing 200+ student placement records using SQL and Excel. Built a KPI dashboard in Power BI surfacing actionable insights — including that CSE graduates command 2× the average package of other branches. Delivered as a stakeholder-ready report.</p>
       <div class="project-tags">
         <span class="tag">Excel</span>
         <span class="tag">SQL</span>
@@ -316,11 +387,11 @@ footer { text-align:center; padding:28px 48px; border-top:1px solid var(--border
   <div class="contact-wrapper">
     <h2>Let's Work Together</h2>
     <p>I'm actively looking for Java Backend Developer or Full Stack roles. If you have an opportunity or just want to connect — reach out!</p>
-    <a href="mailto:sharmakhushi99631@gmail.com" class="contact-email">sharmakhushi99631@gmail.com</a>
+    <a href="/cdn-cgi/l/email-protection#86f5eee7f4ebe7edeef3f5eeefbfbfb0b5b7c6e1ebe7efeaa8e5e9eb" class="contact-email"><span class="__cf_email__" data-cfemail="a1d2c9c0d3ccc0cac9d4d2c9c89898979290e1c6ccc0c8cd8fc2cecc">[email&#160;protected]</span></a>
     <div class="social-row">
       <a href="https://github.com/sharmakhushi18" target="_blank" class="social-btn">⬡ GitHub</a>
       <a href="https://www.linkedin.com/in/khushissharma" target="_blank" class="social-btn">in LinkedIn</a>
-      <a href="https://x.com/sharmaa_khushii" target="_blank" class="social-btn">&#120143; Twitter</a>
+      <a href="https://x.com/sharmaa_khushii" target="_blank" class="social-btn">𝕏 Twitter</a>
     </div>
   </div>
 </section>
@@ -329,7 +400,7 @@ footer { text-align:center; padding:28px 48px; border-top:1px solid var(--border
   <p>Designed &amp; built by Khushi Sharma &nbsp;&middot;&nbsp; 2026</p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Cursor
 const cursor = document.getElementById('cursor');
 const ring = document.getElementById('cursorRing');
@@ -347,17 +418,22 @@ document.addEventListener('mousemove', e => {
   requestAnimationFrame(animRing);
 })();
 
-// Typing
+// Hamburger
+function toggleMobile(){
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : '';
+}
+function closeMobile(){
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Typing — Java Backend only
 const phrases = ['Java Backend Developer','Spring Boot Engineer','REST API Builder','Full Stack Developer'];
 let pi=0, ci=0, del=false;
 const tel = document.getElementById('typingText');
 function type(){
   const cur = phrases[pi];
-  if(!del){ tel.textContent = cur.slice(0,++ci); if(ci===cur.length){del=true;setTimeout(type,1800);return;} }
-  else { tel.textContent = cur.slice(0,--ci); if(ci===0){del=false;pi=(pi+1)%phrases.length;} }
-  setTimeout(type, del?55:85);
-}
-type();
-</script>
-</body>
-</html>
+  if(!del){ tel
