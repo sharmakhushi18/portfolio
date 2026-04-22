@@ -52,8 +52,6 @@ nav.scrolled { background:rgba(11,11,15,0.88); backdrop-filter:blur(20px); }
 .nav-center a:hover { color:var(--fg); }
 .nav-center a:hover::after { transform:scaleX(1); transform-origin:left; }
 .nav-right { display:flex; gap:12px; align-items:center; }
-.btn-hire { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--bg); background:var(--accent); padding:9px 22px; border-radius:2px; text-decoration:none; transition:background 0.2s, transform 0.15s; }
-.btn-hire:hover { background:var(--accent2); transform:translateY(-1px); }
 .btn-resume { font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--fg2); border:1px solid var(--border2); padding:9px 22px; border-radius:2px; text-decoration:none; transition:all 0.2s; }
 .btn-resume:hover { color:var(--fg); border-color:var(--fg3); }
 .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
@@ -140,12 +138,13 @@ nav.scrolled { background:rgba(11,11,15,0.88); backdrop-filter:blur(20px); }
 .project-card { background:var(--bg2); border:1px solid var(--border); border-radius:4px; padding:48px 52px; display:grid; grid-template-columns:1fr auto; gap:48px; align-items:start; transition:border-color 0.3s, background 0.3s; position:relative; overflow:hidden; }
 .project-card::before { content:attr(data-num); position:absolute; right:52px; top:40px; font-family:var(--serif); font-size:6rem; color:rgba(255,255,255,0.03); font-weight:900; font-style:italic; line-height:1; pointer-events:none; user-select:none; }
 .project-card:hover { border-color:var(--border2); background:var(--bg3); }
-.project-card-top { display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+.project-card-top { display:flex; align-items:center; gap:14px; margin-bottom:14px; flex-wrap:wrap; }
 .project-title { font-family:var(--serif); font-size:1.7rem; font-weight:700; letter-spacing:-0.5px; }
 .badge { font-family:var(--mono); font-size:0.62rem; padding:3px 10px; border-radius:20px; letter-spacing:0.08em; }
 .badge-live { background:rgba(74,222,128,0.1); color:var(--green); border:1px solid rgba(74,222,128,0.25); }
 .badge-wip  { background:rgba(232,100,60,0.1); color:var(--accent2); border:1px solid rgba(232,100,60,0.25); }
 .badge-ai   { background:rgba(200,169,110,0.1); color:var(--gold); border:1px solid rgba(200,169,110,0.25); }
+.badge-jwt  { background:rgba(100,149,237,0.1); color:#6495ed; border:1px solid rgba(100,149,237,0.25); }
 .project-blurb { font-family:var(--sans); font-size:0.95rem; color:var(--fg2); line-height:1.75; font-weight:300; margin-bottom:24px; max-width:580px; }
 .project-highlights { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
 .highlight-item { display:flex; gap:14px; align-items:flex-start; font-family:var(--mono); font-size:0.76rem; color:var(--fg3); line-height:1.6; }
@@ -162,6 +161,8 @@ nav.scrolled { background:rgba(11,11,15,0.88); backdrop-filter:blur(20px); }
 .plink-ghost:hover { color:var(--fg); border-color:var(--fg3); }
 .plink-gold { background:rgba(200,169,110,0.15); color:var(--gold); border:1px solid rgba(200,169,110,0.3); }
 .plink-gold:hover { background:rgba(200,169,110,0.25); }
+.plink-swagger { background:rgba(133,234,45,0.1); color:#85ea2d; border:1px solid rgba(133,234,45,0.3); }
+.plink-swagger:hover { background:rgba(133,234,45,0.2); }
 
 /* LEETCODE */
 .lc-container { display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--border); border-radius:4px; overflow:hidden; }
@@ -193,6 +194,24 @@ nav.scrolled { background:rgba(11,11,15,0.88); backdrop-filter:blur(20px); }
 .slink-handle { font-family:var(--mono); font-size:0.7rem; color:var(--fg3); }
 .slink-arrow { color:var(--fg3); font-size:0.8rem; transition:transform 0.2s, color 0.2s; }
 .slink:hover .slink-arrow { transform:translate(4px,-4px); color:var(--accent); }
+
+/* MESSAGE FORM */
+.msg-form { margin-top:24px; display:flex; flex-direction:column; gap:12px; }
+.msg-form input, .msg-form textarea {
+  width:100%; background:var(--bg3); border:1px solid var(--border); border-radius:3px;
+  padding:14px 18px; font-family:var(--mono); font-size:0.8rem; color:var(--fg);
+  outline:none; transition:border-color 0.2s; resize:none;
+}
+.msg-form input::placeholder, .msg-form textarea::placeholder { color:var(--fg3); }
+.msg-form input:focus, .msg-form textarea:focus { border-color:var(--accent); }
+.msg-form textarea { min-height:110px; }
+.msg-send-btn {
+  font-family:var(--mono); font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase;
+  color:var(--bg); background:var(--accent); border:none; padding:14px 28px; border-radius:2px;
+  cursor:pointer; transition:background 0.2s; align-self:flex-start;
+}
+.msg-send-btn:hover { background:var(--accent2); }
+.msg-success { font-family:var(--mono); font-size:0.78rem; color:var(--green); margin-top:8px; display:none; }
 
 footer { border-top:1px solid var(--border); padding:28px 64px; display:flex; justify-content:space-between; align-items:center; }
 .footer-copy { font-family:var(--mono); font-size:0.7rem; color:var(--fg3); }
@@ -276,15 +295,15 @@ footer { border-top:1px solid var(--border); padding:28px 64px; display:flex; ju
     </h1>
     <div class="hero-role">
       <span class="hero-role-icon">⚙</span>
-      <span class="hero-role-text">Java Backend Developer · Spring Boot · PostgreSQL</span>
+      <span class="hero-role-text">Java Backend Developer · Spring Boot · PostgreSQL · JWT</span>
     </div>
     <p class="hero-desc">
-      I build backend systems that work in production — clean architecture, transactional correctness, APIs that scale. Final year B.Tech at <strong>LNCT Bhopal</strong>, building real systems while most people are still studying theory.
+      I build backend systems that work in production — clean architecture, transactional correctness, JWT-secured APIs that scale. Final year B.Tech at <strong>LNCT Bhopal</strong>, building real systems while most people are still studying theory.
     </p>
     <div class="hero-ctas">
       <a href="#projects" class="cta-primary"><span>↓ View Projects</span></a>
       <a href="https://github.com/sharmakhushi18" target="_blank" class="cta-secondary">GitHub ↗</a>
-      <a href="mailto:khushis50956@gmail.com" class="cta-secondary">Email Me</a>
+      <a href="mailto:sharmakhushi99631@gmail.com" class="cta-secondary">Email Me</a>
     </div>
   </div>
   <div class="hero-right">
@@ -307,10 +326,10 @@ footer { border-top:1px solid var(--border); padding:28px 64px; display:flex; ju
     <div class="live-card">
       <div class="live-header">
         <div class="live-dot"></div>
-        <span class="live-title">Currently Building</span>
+        <span class="live-title">Currently Live</span>
       </div>
       <div class="live-body">
-        Adding <strong>JWT Auth</strong> + <strong>WebSocket</strong> to SkyTrack — role-based access for Admin &amp; Passenger, real-time flight status push without polling.
+        <strong>SkyTrack</strong> is production-ready — <strong>JWT Auth</strong>, pessimistic locking, Swagger UI, real email alerts. Deployed on Render + Vercel.
       </div>
     </div>
   </div>
@@ -334,12 +353,12 @@ footer { border-top:1px solid var(--border); padding:28px 64px; display:flex; ju
       <p>I'm looking for a backend or full-stack engineering role where I can work on problems that matter, learn from engineers who care about quality, and write code that actually ships.</p>
     </div>
     <div class="about-features reveal">
+      <div class="feature-row"><span class="feature-icon">◆</span><span class="feature-label">JWT Authentication & Spring Security</span></div>
       <div class="feature-row"><span class="feature-icon">◆</span><span class="feature-label">REST API Design & Transaction Management</span></div>
-      <div class="feature-row"><span class="feature-icon">◆</span><span class="feature-label">State Machine Logic & Concurrency Handling</span></div>
-      <div class="feature-row"><span class="feature-icon">◆</span><span class="feature-label">Database Constraints & Schema Design</span></div>
+      <div class="feature-row"><span class="feature-icon">◆</span><span class="feature-label">Concurrency Handling & Pessimistic Locking</span></div>
+      <div class="feature-row"><span class="feature-icon">◆</span><span class="feature-label">State Machine Logic & Schema Design</span></div>
       <div class="feature-row"><span class="feature-icon">◆</span><span class="feature-label">Containerized Deployment with Docker</span></div>
       <div class="feature-row"><span class="feature-icon">◆</span><span class="feature-label">AI Integration · Groq API · LLM-powered Apps</span></div>
-      <div class="feature-row"><span class="feature-icon">◆</span><span class="feature-label">Open to Remote & On-site Opportunities</span></div>
     </div>
   </div>
 </section>
@@ -361,7 +380,7 @@ footer { border-top:1px solid var(--border); padding:28px 64px; display:flex; ju
       <div class="skill-items">
         <div class="skill-item"><span class="skill-item-name strong">Java 17</span><div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div></div>
         <div class="skill-item"><span class="skill-item-name strong">Spring Boot 3.x</span><div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div></div>
-        <div class="skill-item"><span class="skill-item-name">Spring MVC</span><div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div></div>
+        <div class="skill-item"><span class="skill-item-name strong">JWT + Spring Security</span><div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div></div>
         <div class="skill-item"><span class="skill-item-name">Spring Data JPA</span><div class="skill-bar"><div class="skill-bar-fill" style="width:78%"></div></div></div>
         <div class="skill-item"><span class="skill-item-name">REST API Design</span><div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div></div>
         <div class="skill-item"><span class="skill-item-name">JavaMailSender</span><div class="skill-bar"><div class="skill-bar-fill" style="width:70%"></div></div></div>
@@ -382,11 +401,11 @@ footer { border-top:1px solid var(--border); padding:28px 64px; display:flex; ju
       <div class="skill-block-head"><span class="skill-icon">▲</span><span class="skill-block-title">Concepts & Tools</span></div>
       <div class="skill-items">
         <div class="skill-item"><span class="skill-item-name strong">Transaction Management</span><div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div></div>
-        <div class="skill-item"><span class="skill-item-name">Groq API / LLM</span><div class="skill-bar"><div class="skill-bar-fill" style="width:72%"></div></div></div>
+        <div class="skill-item"><span class="skill-item-name strong">Swagger / OpenAPI</span><div class="skill-bar"><div class="skill-bar-fill" style="width:75%"></div></div></div>
         <div class="skill-item"><span class="skill-item-name">Docker</span><div class="skill-bar"><div class="skill-bar-fill" style="width:70%"></div></div></div>
         <div class="skill-item"><span class="skill-item-name">Git / GitHub</span><div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div></div>
+        <div class="skill-item"><span class="skill-item-name">Groq API / LLM</span><div class="skill-bar"><div class="skill-bar-fill" style="width:72%"></div></div></div>
         <div class="skill-item"><span class="skill-item-name">Render / Vercel</span><div class="skill-bar"><div class="skill-bar-fill" style="width:74%"></div></div></div>
-        <div class="skill-item"><span class="skill-item-name">Postman / Maven</span><div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div></div>
       </div>
     </div>
   </div>
@@ -411,20 +430,32 @@ footer { border-top:1px solid var(--border); padding:28px 64px; display:flex; ju
         <div class="project-card-top">
           <h3 class="project-title">SkyTrack — Flight Delay System</h3>
           <span class="badge badge-live">● Live</span>
+          <span class="badge badge-jwt">🔒 JWT</span>
         </div>
-        <p class="project-blurb">Event-driven Spring Boot API that auto-generates passenger alerts and sends real emails when a flight is delayed or cancelled. Full-stack with React frontend, deployed on Render + Vercel.</p>
+        <p class="project-blurb">Event-driven Spring Boot API that auto-generates passenger alerts and sends real emails when a flight is delayed or cancelled. Secured with JWT Authentication. Full-stack with React frontend, deployed on Render + Vercel.</p>
         <div class="project-highlights">
-          <div class="highlight-item">State machine enforces valid flight status transitions — invalid transitions rejected at service layer</div>
-          <div class="highlight-item"><strong>@Transactional</strong> ensures status change + alert creation rollback together on failure</div>
-          <div class="highlight-item">Email wrapped in try-catch — alert DB persistence guaranteed even if SMTP fails</div>
-          <div class="highlight-item">Deployed on Render with PostgreSQL (Neon) via Docker</div>
+          <div class="highlight-item"><strong>JWT Authentication</strong> + Spring Security — stateless auth, all write endpoints protected with token-based access</div>
+          <div class="highlight-item"><strong>Pessimistic locking</strong> + DB unique constraint — two users booking same seat simultaneously, only one succeeds. Race condition handled at DB level</div>
+          <div class="highlight-item">State machine enforces valid flight transitions — <strong>invalid transitions rejected at service layer</strong> before DB is touched</div>
+          <div class="highlight-item"><strong>@Transactional</strong> on status + alert — both rollback atomically on failure, no partial state ever</div>
+          <div class="highlight-item">Email in try-catch — alert <strong>persists to DB even if SMTP server is down</strong></div>
+          <div class="highlight-item"><strong>Swagger UI</strong> — interactive API documentation, test all endpoints directly in browser without Postman</div>
         </div>
         <div class="project-tags-row">
-          <span class="ptag">Spring Boot</span><span class="ptag">PostgreSQL</span><span class="ptag">React.js</span><span class="ptag">JPA/Hibernate</span><span class="ptag">Docker</span><span class="ptag">JavaMailSender</span><span class="ptag">State Machine</span>
+          <span class="ptag">Spring Boot</span>
+          <span class="ptag">JWT</span>
+          <span class="ptag">Spring Security</span>
+          <span class="ptag">PostgreSQL</span>
+          <span class="ptag">React.js</span>
+          <span class="ptag">JPA/Hibernate</span>
+          <span class="ptag">Docker</span>
+          <span class="ptag">Swagger</span>
+          <span class="ptag">JavaMailSender</span>
         </div>
       </div>
       <div class="project-links">
         <a href="https://flight-delay-frontend-seven.vercel.app" target="_blank" class="plink plink-live">Live Demo ↗</a>
+        <a href="https://flight-delay-alert-api.onrender.com/swagger-ui/index.html" target="_blank" class="plink plink-swagger">API Docs ↗</a>
         <a href="https://github.com/sharmakhushi18/flight-delay-alert-api" target="_blank" class="plink plink-ghost">Backend ↗</a>
         <a href="https://github.com/sharmakhushi18/skytrack-frontend" target="_blank" class="plink plink-ghost">Frontend ↗</a>
       </div>
@@ -441,12 +472,17 @@ footer { border-top:1px solid var(--border); padding:28px 64px; display:flex; ju
         <p class="project-blurb">Paste your resume + job description and get instant AI-powered feedback — match score, ATS score, missing keywords, strengths, weaknesses, and step-by-step improvement tips. Powered by Llama 3.3 70B via Groq API.</p>
         <div class="project-highlights">
           <div class="highlight-item">Integrated <strong>Groq API (Llama 3.3 70B)</strong> for structured JSON analysis — not just free-form text output</div>
-          <div class="highlight-item">Returns ATS score, keyword gap analysis, and actionable tips in a single API call</div>
-          <div class="highlight-item">Built with React 19 + Vite + Tailwind CSS v4 — deployed on Vercel</div>
+          <div class="highlight-item">Returns ATS score, keyword gap analysis, and actionable tips in a <strong>single API call</strong></div>
+          <div class="highlight-item">Built with React 19 + Vite + Tailwind CSS v4 — deployed on Vercel with CI/CD</div>
           <div class="highlight-item">Solves a real problem — most people apply without knowing if their resume matches the JD</div>
         </div>
         <div class="project-tags-row">
-          <span class="ptag">React 19</span><span class="ptag">Vite</span><span class="ptag">Tailwind CSS</span><span class="ptag">Groq API</span><span class="ptag">Llama 3.3 70B</span><span class="ptag">Vercel</span>
+          <span class="ptag">React 19</span>
+          <span class="ptag">Vite</span>
+          <span class="ptag">Tailwind CSS</span>
+          <span class="ptag">Groq API</span>
+          <span class="ptag">Llama 3.3 70B</span>
+          <span class="ptag">Vercel</span>
         </div>
       </div>
       <div class="project-links">
@@ -468,7 +504,11 @@ footer { border-top:1px solid var(--border); padding:28px 64px; display:flex; ju
           <div class="highlight-item">Zero logic leaking into persistence layer — clean DAO separation throughout</div>
         </div>
         <div class="project-tags-row">
-          <span class="ptag">Java</span><span class="ptag">JDBC</span><span class="ptag">MySQL</span><span class="ptag">DAO Pattern</span><span class="ptag">OOP</span>
+          <span class="ptag">Java</span>
+          <span class="ptag">JDBC</span>
+          <span class="ptag">MySQL</span>
+          <span class="ptag">DAO Pattern</span>
+          <span class="ptag">OOP</span>
         </div>
       </div>
       <div class="project-links">
@@ -522,7 +562,16 @@ footer { border-top:1px solid var(--border); padding:28px 64px; display:flex; ju
       <p class="contact-subtext">
         Final year, available from mid-2026. Looking for backend or full-stack engineering roles where the work is real and the team cares about quality.
       </p>
-      <a href="mailto:khushis50956@gmail.com" class="contact-email-link">khushis50956@gmail.com ↗</a>
+      <a href="mailto:sharmakhushi99631@gmail.com" class="contact-email-link">sharmakhushi99631@gmail.com ↗</a>
+
+      <!-- Message Form -->
+      <div class="msg-form" style="margin-top:32px;">
+        <input type="text" id="msgName" placeholder="Your name" />
+        <input type="email" id="msgEmail" placeholder="Your email" />
+        <textarea id="msgText" placeholder="Your message..."></textarea>
+        <button class="msg-send-btn" onclick="sendMessage()">Send Message ↗</button>
+        <div class="msg-success" id="msgSuccess">✓ Message sent! I'll get back to you soon.</div>
+      </div>
     </div>
     <div class="contact-right">
       <a href="https://github.com/sharmakhushi18" target="_blank" class="slink">
@@ -541,8 +590,12 @@ footer { border-top:1px solid var(--border); padding:28px 64px; display:flex; ju
         <div class="slink-left"><span class="slink-name">LeetCode</span><span class="slink-handle">@sharmaa_khushii</span></div>
         <span class="slink-arrow">↗</span>
       </a>
-      <a href="mailto:khushis50956@gmail.com" class="slink">
-        <div class="slink-left"><span class="slink-name">Email</span><span class="slink-handle">khushis50956@gmail.com</span></div>
+      <a href="mailto:sharmakhushi99631@gmail.com" class="slink">
+        <div class="slink-left"><span class="slink-name">Email</span><span class="slink-handle">sharmakhushi99631@gmail.com</span></div>
+        <span class="slink-arrow">↗</span>
+      </a>
+      <a href="https://flight-delay-alert-api.onrender.com/swagger-ui/index.html" target="_blank" class="slink">
+        <div class="slink-left"><span class="slink-name">Swagger API Docs</span><span class="slink-handle">SkyTrack API</span></div>
         <span class="slink-arrow">↗</span>
       </a>
     </div>
@@ -589,6 +642,22 @@ window.addEventListener('scroll',()=>{
 });
 
 document.querySelectorAll('.project-card').forEach((card,i)=>{ card.style.transitionDelay=`${i*0.1}s`; });
+
+function sendMessage() {
+  const name = document.getElementById('msgName').value.trim();
+  const email = document.getElementById('msgEmail').value.trim();
+  const text = document.getElementById('msgText').value.trim();
+  if (!name || !email || !text) {
+    alert('Please fill all fields!');
+    return;
+  }
+  const mailtoLink = `mailto:sharmakhushi99631@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + text)}`;
+  window.location.href = mailtoLink;
+  document.getElementById('msgSuccess').style.display = 'block';
+  document.getElementById('msgName').value = '';
+  document.getElementById('msgEmail').value = '';
+  document.getElementById('msgText').value = '';
+}
 </script>
 </body>
 </html>
